@@ -15,7 +15,7 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @GetMapping
-    public List<Department> findAllEmployees() {
+    public List<Department> findAllDepartments() {
         return departmentService.findAllDepartments();
     }
 
@@ -24,10 +24,14 @@ public class DepartmentController {
         return departmentService.findDepartmentById(id);
     }
 
+    //@GetMapping
+//public List<Department> findAllDepartments() {
+//    return departmentService.findAllEmployeesWithDepartments();
+//}
     @PostMapping("/{id}/add-employee")
     public void addEmployeeToDepartment(@PathVariable Integer id,
-                                        Employee employee) {
-        departmentService.addEmployeeToDepartment(id,employee);
+                                        @RequestBody Employee employee) {
+        departmentService.addEmployeeToDepartment(id, employee);
     }
 
 

@@ -6,7 +6,6 @@ import com.example.springbootrest.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,14 +16,19 @@ public class DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final EmployeeService employeeService;
 
+//    @Transactional(readOnly = true)
+//    public List<Department> findAllEmployeesWithDepartments() {
+//        return departmentRepository.findAllDepartmentsWithEmployees();
+//    }
+
     @Transactional(readOnly = true)
     public List<Department> findAllDepartments() {
-        return departmentRepository.findAll();
+        return departmentRepository.findAllDepartments();
     }
 
     @Transactional(readOnly = true)
     public Department findDepartmentById(Integer id) {
-        return departmentRepository.findById(id)
+        return departmentRepository.findDepartmentById(id)
                 .orElseThrow(() -> new NoSuchElementException("Department with id=%d not found".formatted(id)));
     }
 
@@ -34,7 +38,7 @@ public class DepartmentService {
         departmentRepository.findById(id)
                 .ifPresent(department -> {
                     employee.setDepartment(department);
-                    departmentRepository.save(department);
+                    employeeService.saveEmployee(employee);
                 });
     }
 
